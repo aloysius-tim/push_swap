@@ -17,4 +17,5 @@ int     ft_rotate(t_list** stack);
 int     ft_rotate_both(t_list** stack_a, t_list** stack_b);
 int     ft_reverse_rotate(t_list** stack);
 int     ft_reverse_rotate_both(t_list** stack_a, t_list** stack_b);
+int     ft_handle_instruction(char *instruction, t_list **a_stack, t_list **b_stack);
 #endif
