@@ -4,10 +4,11 @@ int     main(int argc, char *argv[])
 {
     t_list* a_stack;
     t_list* b_stack;
-    (void)b_stack;
     int*    tmp;
     char*   current_instruction;
 
+    if (argc == 1)
+        return (0);
     while (--argc) {
         if (!(tmp = (int *) malloc(sizeof(int))))
             return (0);
@@ -20,6 +21,7 @@ int     main(int argc, char *argv[])
         get_next_line(0, &current_instruction);
         ft_handle_instruction(current_instruction, &a_stack, &b_stack);
     }
+    ft_push_b(&a_stack, &b_stack);
 
     printf("--------------------------------------------------------------\n\nA stack\n");
     ft_list_print_int(a_stack);

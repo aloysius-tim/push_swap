@@ -160,4 +160,8 @@ void				ft_sorted_list_merge(t_list **begin_list1
 void	            *ft_list_pop(t_list **begin_list);
 void	            *ft_list_pop_last(t_list **begin_list);
 int		            ft_list_is_ordered_int(t_list *begin_list);
+t_list     			*ft_list_find_min(t_list *stack);
+t_list  			*ft_list_find_max(t_list *stack);
+int     			ft_list_avg(t_list *stack);
+int                 ft_list_get_nb_smaller(t_list *stack, t_list *elem);
 #endif
