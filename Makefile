@@ -1,14 +1,17 @@
 NAME_CHECKER = checker
 NAME_PUSH    = push_swap
 
-CHECKER = ft_checker.c \
-            ft_op.c
-PUSH_SWAP = ft_push_swap.c \
-            ft_utils.c
+CHECKER     = ft_checker.c \
+                $(BOTH)
+PUSH_SWAP   = ft_push_swap.c \
+                ft_utils.c \
+                $(BOTH)
+BOTH        = ft_op.c \
 
 FLAGS		=   -Wall -Werror -Wextra
 
-HEADERS		=	includes/ft_checker.h
+HEADERS		=	includes/ft_checker.h \
+                includes/ft_push_swap.h
 LIB 		=	libft/libft.a
 
 SRCS        =   $(CHECKER) $(PUSH_SWAP)

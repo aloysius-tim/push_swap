@@ -102,7 +102,8 @@ SRC =	ft_atoi.c \
 		get_next_line.c \
 		ft_list_pop.c \
 		ft_list_is_ordered.c \
-		ft_list_math.c
+		ft_list_math.c \
+		ft_math.c \
 
 OBJ = $(SRC:.c=.o)
 	HEADER = -I includes/libft.h

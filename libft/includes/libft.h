@@ -164,4 +164,6 @@ t_list     			*ft_list_find_min(t_list *stack);
 t_list  			*ft_list_find_max(t_list *stack);
 int     			ft_list_avg(t_list *stack);
 int                 ft_list_get_nb_smaller(t_list *stack, t_list *elem);
+
+int 				ft_ceil(float nb);
 #endif
