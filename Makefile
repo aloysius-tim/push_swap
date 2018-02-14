@@ -1,5 +1,6 @@
 NAME_CHECKER = checker
 NAME_PUSH    = push_swap
+NAME         = $(NAME_CHECKER) $(NAME_PUSH)
 
 CHECKER     = ft_checker.c \
                 $(BOTH)

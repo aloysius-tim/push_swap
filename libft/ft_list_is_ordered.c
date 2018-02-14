@@ -11,17 +11,33 @@
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+#include <stdio.h>
 
 int		ft_list_is_ordered_int(t_list *begin_list)
 {
-	int previous;
+    int current;
 
-    previous = *((int*)begin_list->data);
+    current = *((int*)begin_list->data);
+    while (begin_list->next)
+    {
+        if (*((int*)begin_list->next->data) < current)
+            return (0);
+        current = *((int*)begin_list->next->data);
+        begin_list = begin_list->next;
+    }
+    return (1);
+}
+
+int		ft_list_is_reverse_ordered_int(t_list *begin_list)
+{
+	int current;
+
+	current = *((int*)begin_list->data);
 	while (begin_list->next)
 	{
-		if (*((int*)begin_list->data) < previous)
+		if (*((int*)begin_list->next->data) > current)
 			return (0);
-        previous = *((int*)begin_list->data);
+		current = *((int*)begin_list->next->data);
 		begin_list = begin_list->next;
 	}
 	return (1);

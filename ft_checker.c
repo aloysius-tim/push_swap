@@ -44,17 +44,17 @@ int     ft_handle_instruction(char *instruction, t_list **a_stack, t_list **b_st
     else if (ft_strcmp(instruction, "pb") == 0)
         return (ft_push_b(a_stack, b_stack));
     else if (ft_strcmp(instruction, "ra") == 0)
-        return (ft_rotate(a_stack));
+        return (ft_rotate(a_stack, 1));
     else if (ft_strcmp(instruction, "rb") == 0)
-        return (ft_rotate(b_stack));
+        return (ft_rotate(b_stack, 1));
     else if (ft_strcmp(instruction, "rr") == 0)
-        return (ft_rotate_both(a_stack, b_stack));
+        return (ft_rotate_both(a_stack, b_stack, 1));
     else if (ft_strcmp(instruction, "rra") == 0)
-        return (ft_reverse_rotate(a_stack));
+        return (ft_reverse_rotate(a_stack, 1));
     else if (ft_strcmp(instruction, "rrb") == 0)
-        return (ft_reverse_rotate(b_stack));
+        return (ft_reverse_rotate(b_stack, 1));
     else if (ft_strcmp(instruction, "rrr") == 0)
-        return (ft_reverse_rotate_both(a_stack, b_stack));
+        return (ft_reverse_rotate_both(a_stack, b_stack, 1));
     else if (ft_strcmp(instruction, "print") == 0)
     {
         printf("\n\nA stack\n");
