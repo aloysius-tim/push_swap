@@ -9,11 +9,12 @@ PUSH_SWAP   = ft_push_swap.c \
                 $(BOTH)
 BOTH        = ft_op.c \
 
-FLAGS		=   -Wall -Werror -Wextra
+FLAGS		=   -Wall -Werror -Wextra -fsanitize=undefined
 
 HEADERS		=	includes/ft_checker.h \
                 includes/ft_push_swap.h
 LIB 		=	libft/libft.a
+PRINTF      =   ft_printf/libftprintf.a
 
 SRCS        =   $(CHECKER) $(PUSH_SWAP)
 OBJS		=	$(SRCS:.c=.o)
@@ -27,10 +28,10 @@ test		:	$(NAME) main.o
 				gcc $(FLAGS) $(NAME) $(TEST)
 
 $(NAME_CHECKER)		:	$(CHECKER:.c=.o) $(DEP)
-				        gcc $(FLAGS) $(CHECKER) -o $(NAME_CHECKER) -Llibft -lft
+				        gcc $(FLAGS) $(CHECKER) -o $(NAME_CHECKER) -Llibft -lft -Lft_printf ./ft_printf/libftprintf.a
 
 $(NAME_PUSH)		:	$(PUSH_SWAP:.c=.o) $(DEP)
-				        gcc $(FLAGS) $(PUSH_SWAP) -o $(NAME_PUSH) -Llibft -lft
+				        gcc $(FLAGS) $(PUSH_SWAP) -o $(NAME_PUSH) -Llibft -lft -Lft_printf ./ft_printf/libftprintf.a
 
 %.o 		:	%.c
 				gcc $(FLAGS) -c $< -o $@
@@ -40,6 +41,12 @@ $(LIB)		:
 
 lib 		:
 				make -C libft/
+
+$(PRINTF)	:
+				make -C ft_printf/
+
+printf 		:
+				make -C ft_printf/
 
 clean		:
 				rm -rf $(OBJS)

@@ -2,6 +2,7 @@
 #define FT_PUSH_SWAP_H
 
 # include "../libft/includes/libft.h"
+# include "../ft_printf/include/ft_printf.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
@@ -12,6 +13,6 @@
 //t_list  **ft_generate_stack(int argc, char *argv[]);
 int     ft_refractor(t_list *stack);
 void    print_stacks(t_list *stack_a, t_list *stack_b, char *status);
-int     ft_push_a_stack_slide(t_list **a_stack, t_list **b_stack, int nb_elems, int slide_size);
+int     ft_push_a_stack_slide(t_list **a_stack, t_list **b_stack, int nb_elems, int slide_size, int list_size);
 
 #endif
