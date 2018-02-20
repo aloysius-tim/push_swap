@@ -11,6 +11,7 @@ int     main(int argc, char *argv[])
     int     slide_size;
     //int     nb_slides;
     int     to_remove;
+    int     nb_slides;
 
     nbOp = 0;
     nb_elems = 0;
@@ -27,65 +28,161 @@ int     main(int argc, char *argv[])
 
     nb_elems = ft_refractor(a_stack);
 
-    slide_size = nb_elems / (nb_elems / 10);
-    to_remove = ft_push_slides(&a_stack, &b_stack, slide_size, slide_size, nb_elems);
+    nb_slides = 32;
+    slide_size = nb_elems / nb_slides;
+    to_remove = ft_push_slides(&a_stack, &b_stack, slide_size, 1, nb_elems, nb_slides / 4, nb_slides / 4 + 1);
 
-    nbOp += ft_order_stack(a_stack, b_stack);
+    nbOp += ft_order_stack(a_stack, b_stack, nb_elems);
 
     //print_stacks(a_stack, b_stack, "LAST print -- Should be ordered");
     //printf("\nPre-operations = %d, Total Operations = %d", to_remove, nbOp);
     return (1);
 }
 
-int     ft_order_stack(t_list  *a_stack, t_list *b_stack)
+int     ft_closest_nearest(t_list  *a_stack, t_list *b_stack, int stack_size)
+{
+    int nearest_top;
+    int nearest_bottom;
+    int     counter;
+
+    counter = 20;
+
+    nearest_top = *((int *)b_stack->data);
+    nearest_bottom = *((int *)b_stack->data);
+    while (counter-- && b_stack)
+    {
+        //printf("- %d\n", *((int *)b_stack->data));
+        if (*((int *)b_stack->data) < stack_size / 2 && *((int *)b_stack->data) < *((int *)a_stack->data) + 10)
+            return (*((int *)b_stack->data));
+        if (*((int *)b_stack->data) > stack_size / 2 && *((int *)b_stack->data) < *((int *)ft_list_last(a_stack)
+                ->data) + 10)
+            return (*((int *)b_stack->data));
+        b_stack = b_stack->next;
+    }
+    //printf("Top nearest = %d, bottom nearest = %d, TOP = %d, Bottom = %d\n", nearest_top, nearest_bottom, *((int *)
+    //        a_stack->data), *((int *)ft_list_last(a_stack)->data));
+    if (*((int *)a_stack->data) - nearest_top < nearest_bottom - *((int *)ft_list_last(a_stack)->data))
+    {
+        //printf("Return top \n");
+        return (nearest_top);
+    }
+    else
+    {
+        //printf("Return bottom \n");
+        return (nearest_bottom);
+    }
+}
+
+int     ft_order_stack(t_list  *a_stack, t_list *b_stack, int stack_size)
 {
     int nb_rotation;
     int nbOp;
+    int tmp;
+    int b_rotations;
 
+    tmp = 0;
+    b_rotations = 0;
     nbOp = 0;
     nb_rotation = 1;
     nbOp += ft_op("pa", &a_stack, &b_stack, 1);
-
+    (void)stack_size;
     while (ft_list_size(b_stack) != 0)
     {
-        if (b_stack && a_stack && ((*((int *)b_stack->data) - *((int *)a_stack->data) != 1) || *((int*)ft_list_last(a_stack)->data) - *((int *)b_stack->data) != 1))
+        /*int nearest;
+        nearest = ft_closest_nearest(a_stack, b_stack, stack_size);
+        while (*((int *)b_stack->data) != nearest)
         {
-            if (*((int*)ft_list_last(a_stack)->data) - *((int *)b_stack->data) >= *((int *)b_stack->data) - *((int*)a_stack->data))
-            {//Insert by the top
-                while (*((int *)a_stack->data) < *((int *)b_stack->data))
+            b_rotations++;
+            //if (a_stack && b_stack && (*((int *)b_stack->data) - *((int *)ft_list_last(a_stack)->data) == 1))
+            //{
+            //    nbOp += ft_op("pa", &a_stack, &b_stack, 1);
+            //    nbOp += ft_op("ra", &a_stack, &b_stack, 1);
+            //    b_rotations--;
+            //}
+            //if (a_stack && b_stack && (*((int *)a_stack->data) - *((int *)b_stack->data) == 1))
+            //{
+            //    nbOp += ft_op("pa", &a_stack, &b_stack, 1);
+            //    b_rotations--;
+            //}
+            ft_op("rb", &a_stack, &b_stack, 1);
+        }*/
+
+        if (*((int *)b_stack->data) < *((int *)ft_list_at(a_stack, (ft_list_size(a_stack) / 2))->data) || *((int *)b_stack->data) < *((int*)a_stack->data))
+        {//Insert by the top
+            //nb_rotation = ft_top_insert(a_stack, b_stack);
+            while (a_stack && b_stack && *((int *)a_stack->data) < *((int *)b_stack->data))
+            {
+                nb_rotation++;
+                nbOp += ft_op("ra", &a_stack, &b_stack, 1);
+            }
+            nbOp += ft_op("pa", &a_stack, &b_stack, 1);
+
+            while (--nb_rotation)
+            {
+                while (a_stack && b_stack && (*((int *)a_stack->data) - *((int *)b_stack->data) == 1))
+                     nbOp += ft_op("pa", &a_stack, &b_stack, 1);
+                nbOp += ft_op("rra", &a_stack, &b_stack, 1);
+            }
+            //nbOp += ft_op("rra", &a_stack, &b_stack, nb_rotation - 1);
+        }
+        else
+        {//Insert by the bottom
+            //nb_rotation = ft_bottom_insert(a_stack, b_stack);
+            while (*((int *)ft_list_last(a_stack)->data) > *((int *)b_stack->data))
+            {
+                nb_rotation++;
+                nbOp += ft_op("rra", &a_stack, &b_stack, 1);
+            }
+            nbOp += ft_op("pa", &a_stack, &b_stack, 1);
+
+            while (nb_rotation--)
+            {
+                if (a_stack && b_stack && (*((int *)b_stack->data) - *((int *)ft_list_last(a_stack)->data) == 1))
                 {
-                    nb_rotation++;
+                    nbOp += ft_op("pa", &a_stack, &b_stack, 1);
                     nbOp += ft_op("ra", &a_stack, &b_stack, 1);
                 }
-                nbOp += ft_op("pa", &a_stack, &b_stack, 1);
-                nbOp += ft_op("rra", &a_stack, &b_stack, nb_rotation - 1);
+                nbOp += ft_op("ra", &a_stack, &b_stack, 1);
             }
-            else
-            {//Insert by the bottom
-                while (*((int *)ft_list_last(a_stack)->data) > *((int *)b_stack->data))
-                {
-                    nb_rotation++;
-                    nbOp += ft_op("rra", &a_stack, &b_stack, 1);
-                }
-                nbOp += ft_op("pa", &a_stack, &b_stack, 1);
-                nbOp += ft_op("ra", &a_stack, &b_stack, nb_rotation);
-            }
+            //nbOp += ft_op("ra", &a_stack, &b_stack, nb_rotation);
         }
-        else if (b_stack && a_stack && *((int *)b_stack->data) > *((int *)a_stack->data))
-        {
-            nbOp += ft_op("pa", &a_stack, &b_stack, 1);
-            nbOp += ft_op("sa", &a_stack, &b_stack, 1);
-        }
-        else if (b_stack && a_stack && *((int *)b_stack->data) < *((int *)a_stack->data))
-            nbOp += ft_op("pa", &a_stack, &b_stack, 1);
         nb_rotation = 1;
-        //print_stacks(a_stack, b_stack, "AFTER");
-        //printf("\nPre-operations = %d, Total Operations = %d", to_remove, nbOp);
+        /*while (b_rotations--)
+        {
+            ft_op("rrb", &a_stack, &b_stack, 1);
+            if (a_stack && b_stack && (*((int *)b_stack->data) - *((int *)ft_list_last(a_stack)->data) == 1))
+            {
+                nbOp += ft_op("pa", &a_stack, &b_stack, 1);
+                nbOp += ft_op("ra", &a_stack, &b_stack, 1);
+            }
+            if (a_stack && b_stack && (*((int *)a_stack->data) - *((int *)b_stack->data) == 1))
+                nbOp += ft_op("pa", &a_stack, &b_stack, 1);
+        }
+        b_rotations = 0;*/
     }
     return (nbOp);
 }
 
-int     ft_push_slides(t_list **a_stack, t_list **b_stack, int max, int slide_size, int nb_elems)
+int     ft_is_in_slide(t_list **a_stack, int num_slide, int slide_size, int stack_initial_size)
+{
+    int max_top;
+    int max_bottom;
+    int min_top;
+    int min_bottom;
+
+    max_top = num_slide * slide_size;
+    min_top = max_top - slide_size;
+    min_bottom = stack_initial_size - max_top;
+    max_bottom = stack_initial_size - min_top;
+
+    if ((*((int *)((*a_stack)->data)) >= min_top && *((int *)((*a_stack)->data)) <= max_top) || (*((int *)((*a_stack)
+            ->data)) >= min_bottom && *((int *)((*a_stack)->data)) <= max_bottom))
+        return (1);
+    return (0);
+}
+
+int     ft_push_slides(t_list **a_stack, t_list **b_stack, int slide_size, int iteration, int stack_initial_size,
+                       int top_slide, int bottom_slide)
 {
     int     counter;
     int     stack_size;
@@ -94,28 +191,68 @@ int     ft_push_slides(t_list **a_stack, t_list **b_stack, int max, int slide_si
     stack_size = ft_list_size(*a_stack);
     if (stack_size == 0)
         return (counter);
-    while (counter++ < stack_size)
+    while (counter < stack_size)
+    {
+        if (ft_is_in_slide(a_stack, bottom_slide, slide_size, stack_initial_size))
+        {
+            ft_op("pb", a_stack, b_stack, 1);
+            if (ft_list_size(*b_stack) >= 2 &&
+                *((int *)((*b_stack)->data)) < stack_initial_size / 2 &&
+                *((int *)((*b_stack)->next->data)) < stack_initial_size / 2 &&
+                *((int *)((*b_stack)->data)) < (*((int *)((*b_stack)->next->data))))
+                ft_op("sb", a_stack, b_stack, 1);
+            else if (ft_list_size(*b_stack) >= 2 &&
+                     *((int *)((*b_stack)->data)) > stack_initial_size / 2 &&
+                     *((int *)((*b_stack)->next->data)) > stack_initial_size / 2 &&
+                     *((int *)((*b_stack)->data)) > (*((int *)((*b_stack)->next->data))))
+                ft_op("sb", a_stack, b_stack, 1);
+        }
+        else if (ft_is_in_slide(a_stack, top_slide, slide_size, stack_initial_size))
+        {
+            ft_op("pb", a_stack, b_stack, 1);
+            ft_op("rb", a_stack, b_stack, 1);
+        } else
+            ft_op("ra", a_stack, b_stack, 1);
+        counter++;
+    }
+    return (ft_push_slides(a_stack, b_stack, slide_size, iteration + 1, stack_initial_size, top_slide - 1,
+                           bottom_slide + 1));
+}
+
+/*int     ft_push_slides(t_list **a_stack, t_list **b_stack, int max, int slide_size, int nb_elems)
+{
+    int     counter;
+    int     stack_size;
+
+    counter = 0;
+    stack_size = ft_list_size(*a_stack);
+    if (stack_size == 0)
+        return (counter);
+    while (counter < stack_size)
     {
         if (*a_stack && (*((int *)((*a_stack)->data)) <= max || *((int *)((*a_stack)->data)) >= nb_elems - max))
         {
-            counter += ft_op("pb", a_stack, b_stack, 1);
+            ft_op("pb", a_stack, b_stack, 1);
 
             if (ft_list_size(*b_stack) >= 2 &&
                 *((int *)((*b_stack)->data)) < nb_elems / 2 &&
                 *((int *)((*b_stack)->next->data)) < nb_elems / 2 &&
                 *((int *)((*b_stack)->data)) < (*((int *)((*b_stack)->next->data))))
-                counter += ft_op("sb", a_stack, b_stack, 1);
+                ft_op("sb", a_stack, b_stack, 1);
             else if (ft_list_size(*b_stack) >= 2 &&
                      *((int *)((*b_stack)->data)) > nb_elems / 2 &&
                      *((int *)((*b_stack)->next->data)) > nb_elems / 2 &&
                      *((int *)((*b_stack)->data)) > (*((int *)((*b_stack)->next->data))))
-                counter += ft_op("sb", a_stack, b_stack, 1);
+                ft_op("sb", a_stack, b_stack, 1);
         }
         else
-            counter += ft_op("ra", a_stack, b_stack, 1);
+            ft_op("ra", a_stack, b_stack, 1);
+        counter++;
     }
-    return (counter + ft_push_slides(a_stack, b_stack, max + slide_size, slide_size, nb_elems));
-}
+    return (ft_push_slides(a_stack, b_stack, max + slide_size, slide_size, nb_elems));
+}*/
+
+
 
 int    ft_refractor(t_list *stack)
 {
