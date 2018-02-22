@@ -12,13 +12,16 @@
 
 #include "includes/libft.h"
 
-int 	ft_ceil(float nb)
+double		ft_ceil(double x)
 {
-	int integer;
+	if (x < 0)
+		return ((int)x);
+	return (((int)x) + 1);
+}
 
-	integer = (int)nb;
-	if (nb == (float)integer)
-		return (nb);
-	else
-		return (nb + 1);
+double		ft_floor(double x)
+{
+	if (x > 0)
+		return ((int)x);
+	return (((int)x) - 1);
 }

@@ -166,5 +166,6 @@ int     			ft_list_avg(t_list *stack);
 int                 ft_list_get_nb_smaller(t_list *stack, t_list *elem);
 int					ft_list_is_reverse_ordered_int(t_list *begin_list);
 
-int 				ft_ceil(float nb);
+double				ft_ceil(double x);
+double				ft_floor(double x);
 #endif
