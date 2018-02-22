@@ -25,4 +25,7 @@ int     ft_bottom_insert(t_list  *a_stack, t_list *b_stack);
 int     ft_rotate_bottom_insert(t_list  *a_stack, t_list *b_stack);
 int     ft_closest_nearest(t_list  *a_stack, t_list *b_stack, int stack_size);
 int     ft_is_in_slide(t_list **a_stack, int num_slide, int slide_size, int stack_initial_size);
+int    ft_set_on_b_nearest(t_list **a_stack, t_list **b_stack);
+int     ft_get_head_less_x(t_list *stack);
+int     ft_get_bottom_less_x(t_list *stack);
 #endif

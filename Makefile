@@ -28,13 +28,13 @@ test		:	$(NAME) main.o
 				gcc $(FLAGS) $(NAME) $(TEST)
 
 $(NAME_CHECKER)		:	$(CHECKER:.c=.o) $(DEP)
-				        gcc $(FLAGS) $(CHECKER) -o $(NAME_CHECKER) -Llibft -lft -Lft_printf ./ft_printf/libftprintf.a
+				        gcc $(FLAGS) $(CHECKER) -o $(NAME_CHECKER) -Llibft -lft -Lft_printf ./ft_printf/libftprintf.a -g
 
 $(NAME_PUSH)		:	$(PUSH_SWAP:.c=.o) $(DEP)
-				        gcc $(FLAGS) $(PUSH_SWAP) -o $(NAME_PUSH) -Llibft -lft -Lft_printf ./ft_printf/libftprintf.a
+				        gcc $(FLAGS) $(PUSH_SWAP) -o $(NAME_PUSH) -Llibft -lft -Lft_printf ./ft_printf/libftprintf.a -g
 
 %.o 		:	%.c
-				gcc $(FLAGS) -c $< -o $@
+				gcc $(FLAGS) -c $< -o $@ -g
 
 $(LIB)		:
 				make -C libft/
