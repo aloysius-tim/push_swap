@@ -225,7 +225,6 @@ int     ft_is_in_slide(t_list **a_stack, int num_slide, int slide_size, int stac
     min_top = max_top - slide_size;
     min_bottom = stack_initial_size - max_top;
     max_bottom = stack_initial_size - min_top;
-
     if ((*((int *)((*a_stack)->data)) >= min_top && *((int *)((*a_stack)->data)) <= max_top) || (*((int *)((*a_stack)
             ->data)) >= min_bottom && *((int *)((*a_stack)->data)) <= max_bottom))
         return (1);
@@ -245,19 +244,7 @@ int     ft_push_slides(t_list **a_stack, t_list **b_stack, int slide_size, int i
     while (counter < stack_size)
     {
         if (ft_is_in_slide(a_stack, bottom_slide, slide_size, stack_initial_size))
-        {
             ft_op("pb", a_stack, b_stack, 1);
-            if (ft_list_size(*b_stack) >= 2 &&
-                *((int *)((*b_stack)->data)) < stack_initial_size / 2 &&
-                *((int *)((*b_stack)->next->data)) < stack_initial_size / 2 &&
-                *((int *)((*b_stack)->data)) < (*((int *)((*b_stack)->next->data))))
-                ft_op("sb", a_stack, b_stack, 1);
-            else if (ft_list_size(*b_stack) >= 2 &&
-                     *((int *)((*b_stack)->data)) > stack_initial_size / 2 &&
-                     *((int *)((*b_stack)->next->data)) > stack_initial_size / 2 &&
-                     *((int *)((*b_stack)->data)) > (*((int *)((*b_stack)->next->data))))
-                ft_op("sb", a_stack, b_stack, 1);
-        }
         else if (ft_is_in_slide(a_stack, top_slide, slide_size, stack_initial_size))
         {
             ft_op("pb", a_stack, b_stack, 1);
@@ -292,16 +279,4 @@ int    ft_refractor(t_list *stack)
         stack = stack->next;
     }
     return (nb_elem);
-}
-
-void print_stacks(t_list *stack_a, t_list *stack_b, char *status)
-{
-    ft_printf("--------------------------------------------------------------\n\n%s\n\nA stack\n", status);
-    if (stack_a) ft_list_print_int(stack_a);
-    else ft_printf("NA\n");
-
-    ft_printf("\n\nB stack\n");
-    if (stack_b) ft_list_print_int(stack_b);
-    else ft_printf("NA\n\n---------------------------------------------------------------\n");
-    ft_printf("---------------------------------------------------------------\n");
 }
