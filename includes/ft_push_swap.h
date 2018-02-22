@@ -16,7 +16,7 @@ void    print_stacks(t_list *stack_a, t_list *stack_b, char *status);
 int     ft_push_slides(t_list **a_stack, t_list **b_stack, int slide_size, int iteration, int stack_initial_size,
                        int top_slide, int bottom_slide);
 int     ft_push_a_stack_slide(t_list **a_stack, t_list **b_stack, int nb_elems, int slide_size, int list_size);
-int     ft_order_stack(t_list  *a_stack, t_list *b_stack);
+void     ft_order_stack(t_list  **a_stack, t_list **b_stack);
 int     ft_count_rotations_a_inf_b(t_list *a_stack, t_list *b_stack);
 int     ft_count_rotations_a_sup_b(t_list *a_stack, t_list *b_stack);
 int     ft_rotations_a_inf_b(t_list *a_stack, t_list *b_stack);

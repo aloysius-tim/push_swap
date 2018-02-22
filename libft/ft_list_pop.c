@@ -22,6 +22,7 @@ void	*ft_list_pop(t_list **begin_list)
 	val = ((int *)ft_list_at(*begin_list, 0)->data);
     tmp = *begin_list;
 	*begin_list = (*begin_list)->next;
+    //free(tmp->data);
     free(tmp);
 	return (val);
 }

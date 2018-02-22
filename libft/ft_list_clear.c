@@ -21,6 +21,7 @@ void	ft_list_clear(t_list **begin_list)
 	while (current)
 	{
 		next = current->next;
+		free(current->data);
 		free(current);
 		current = next;
 	}
