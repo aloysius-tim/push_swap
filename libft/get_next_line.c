@@ -6,105 +6,80 @@
 /*   By: tkeynes <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 16:56:22 by tkeynes           #+#    #+#             */
-/*   Updated: 2017/11/25 18:50:58 by tkeynes          ###   ########.fr       */
+/*   Updated: 2018/02/24 16:16:05 by tkeynes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+#include <limits.h>
 
-int		get_next_line(int const fd, char **line)
+char	*ft_join_free(char *t, char *buf, int rf)
 {
-	t_list	*current_elem;
-	int		ret;
+	char		*tmp;
 
-	if (!line || BUFF_SIZE == 0)
-		return (-1);
-	if (!find_fd_list(fd))
-		current_elem = ft_list_push_back(&g_fds, 0);
-	else
-		current_elem = find_fd_list(fd);
-	current_elem->content_size = fd;
-	if (!((ret = iterations(current_elem, line, fd)) == -100))
-		return (ret);
-	if ((ft_strchr(*line, '\n')))
-	{
-		free(current_elem->data);
-		current_elem->data = ft_strdup(ft_strchr(*line, '\n') + 1);
-		*(ft_strchr(*line, '\n')) = '\0';
-	}
-	return (1);
+	buf[rf] = '\0';
+	tmp = t;
+	t = ft_strjoin(t, buf);
+	ft_strdel(&tmp);
+	return (t);
 }
 
-int		iterations(t_list *current_elem, char **line, int fd)
+char	*ft_take_rest(char *t)
 {
-	int ret;
+	char	*tmp;
 
-	*line = "";
-	ret = 10;
-	if (!current_elem->data || ft_strlen((char *)current_elem->data) == 0)
-		ret = read_buffer(fd, line);
-	else if (!ft_strchr(current_elem->data, '\n') ||
-!ft_strchr(current_elem->data, 0))
+	tmp = t;
+	t = ft_strsub(ft_strchr(t, X), 1, ft_strlen(ft_strchr(t, X)) - 1);
+	ft_strdel(&tmp);
+	return (t);
+}
+
+char	*ft_dup_zero(char *t)
+{
+	char	*tmp;
+
+	tmp = t;
+	t = ft_strdup("\0");
+	ft_strdel(&tmp);
+	return (t);
+}
+
+int		take_line(char **line, char *buf, const int fd)
+{
+	static char	*stock[OPEN_MAX];
+	int			rf;
+
+	SS = (!SS) ? ft_strdup("\0") : SS;
+	while ((rf = read(fd, buf, BUFF_SIZE)) && !(ft_strchr(buf, X)))
 	{
-		ret = read_buffer(fd, line);
-		(*line) = ft_strjoin(current_elem->data, *line);
-		if (!ft_strchr(*line, '\n'))
-			free(current_elem->data);
+		if (rf == -1)
+			return (-1);
+		SS = ft_join_free(SS, buf, rf);
 	}
-	else
-		(*line) = ft_strdup(current_elem->data);
-	if ((ft_strlen(*line) == 0 && ret == 0) || !(*line))
-		return (0);
-	if (ret == -1)
-		return (-1);
-	if (ret == -2)
+	SS = ft_join_free(SS, buf, rf);
+	if (ft_strchr(SS, X))
+	{
+		*line = ft_strsub(SS, 0, ft_strlen(SS) - ft_strlen(ft_strchr(SS, X)));
+		SS = ft_take_rest(SS);
 		return (1);
-	return (-100);
-}
-
-t_list	*find_fd_list(int const fd)
-{
-	t_list	*tmp;
-
-	tmp = g_fds;
-	if (!g_fds)
-		return (0);
-	if ((const int)tmp->content_size == fd)
-		return (tmp);
-	while (tmp)
-	{
-		if ((const int)tmp->content_size == fd)
-			return (tmp);
-		tmp = tmp->next;
 	}
+	if (SS[0] != '\0')
+	{
+		*line = ft_strjoin(SS, buf);
+		SS = ft_dup_zero(SS);
+		return (1);
+	}
+	ft_strdel(&SS);
 	return (0);
 }
 
-int		read_buffer(int const fd, char **final)
+int		get_next_line(const int fd, char **line)
 {
-	int		ret_read;
-	char	*tmp;
-	char	*buffer;
+	char	buf[BUFF_SIZE + 1];
+	int		ret_val;
 
-	if ((buffer = (char *)malloc(sizeof(char) * (BUFF_SIZE))) == 0)
+	if (fd < 0 || fd > OPEN_MAX || line == NULL)
 		return (-1);
-	while ((!ft_strchr(*final, '\n') || !ft_strchr(*final, 0)))
-	{
-		ft_strclr(buffer);
-		tmp = ft_strdup(*final);
-		(**final != 0) ? free(*final) : (void)(*final);
-		if ((!(*final = (char *)malloc((BUFF_SIZE + ft_strlen(tmp) + 1)))) ||
-((ret_read = read(fd, buffer, BUFF_SIZE)) == -1))
-			return (-1);
-		buffer[ret_read] = 0;
-		ft_strcpy(*final, tmp);
-		ft_strcat(*final, buffer);
-		free(tmp);
-		if (!ret_read && !(*final)[ft_strlen(*final)] && ft_strlen(*final) > 0)
-			return (-2);
-		if (ret_read == 0)
-			return (0);
-	}
-	free(buffer);
-	return (1);
+	ret_val = take_line(line, buf, fd);
+	return (ret_val);
 }

@@ -15,7 +15,9 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# define BUFF_SIZE 9
+# define BUFF_SIZE 4
+# define X '\n'
+# define SS stock[fd]
 
 typedef struct		s_list
 {

@@ -6,7 +6,7 @@
 /*   By: tkeynes <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 14:39:00 by tkeynes           #+#    #+#             */
-/*   Updated: 2018/02/24 14:40:22 by tkeynes          ###   ########.fr       */
+/*   Updated: 2018/02/24 14:56:18 by tkeynes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 int		ft_get_head_less_x(t_list *stack)
 {
-	int     current_pos;
+	int		current_pos;
 
 	if (!stack)
-		return 0;
+		return (0);
 	current_pos = ft_list_size(stack) / 2;
 	while (current_pos != 0 &&
 			*((int *)ft_list_at(stack, current_pos)->data) -
@@ -32,7 +32,7 @@ int		ft_get_bottom_less_x(t_list *stack)
 	int current_pos;
 
 	if (!stack)
-		return 0;
+		return (0);
 	current_pos = ft_list_size(stack) / 2;
 	while (current_pos != ft_list_size(stack) - 1
 			&& *((int *)ft_list_at(stack, current_pos + 1)->data) -
@@ -48,13 +48,13 @@ int max_length)
 
 	counter = 0;
 	if (!stack)
-		return 0;
+		return (0);
 	while (stack)
 	{
 		if ((*((int *)(stack)->data) <= top && *((int *)(stack)->data) >= top -
 max_length) || (*((int *)(stack)->data) > bottom && *((int *)(stack)->data) <=
 bottom + max_length))
-			break;
+			break ;
 		counter++;
 		stack = (stack)->next;
 	}
@@ -70,21 +70,21 @@ int max_length)
 	pos = ft_list_size(stack) - 1;
 	counter = 0;
 	if (!stack || pos == 0)
-		return 0;
+		return (0);
 	while (pos)
 	{
 		if ((*((int *)(ft_list_at(stack, pos))->data) <= top && *((int *)(
 ft_list_at(stack, pos))->data) >= top - max_length) || (*((int *)(ft_list_at(
 stack, pos))->data) > bottom && *((int *)(ft_list_at(stack, pos))->data) <=
 bottom + max_length))
-			break;
+			break ;
 		pos--;
 		counter++;
 	}
 	return (counter + 1);
 }
 
-int		exit_error()
+int		exit_error(void)
 {
 	ft_printf("Error\n");
 	exit(-1);
