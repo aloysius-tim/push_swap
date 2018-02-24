@@ -33,7 +33,7 @@ $(NAME_PUSH)		:	$(PUSH_SWAP:.c=.o) $(DEP)
 				        gcc $(FLAGS) $(PUSH_SWAP) -o $(NAME_PUSH) -Llibft -lft -Lft_printf ./ft_printf/libftprintf.a
 
 %.o 		:	%.c
-				gcc $(FLAGS) -c $< -o $@ -g
+				gcc $(FLAGS) -c $< -o $@
 
 $(LIB)		:
 				make -C libft/
