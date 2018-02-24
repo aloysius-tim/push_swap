@@ -15,9 +15,15 @@ int     main(int argc, char *argv[])
     while (--argc && ++nb_elems) {
         if (!(tmp = (int *) malloc(sizeof(int))))
             return (0);
+        if (!ft_isdigit(*argv[argc]))
+            exit_error();
         *tmp = ft_atoi(argv[argc]);
         ft_list_push_front(&a_stack, tmp);
     }
+    if (ft_list_has_duplicates_int(a_stack))
+        exit_error();
+    if (nb_elems == 2 && ft_list_is_reverse_ordered_int(a_stack))
+        ft_op("sa", &a_stack, &b_stack, 1);
     if (nb_elems == 1 || ft_list_is_ordered_int(a_stack))
         return (1);
     nb_elems = ft_refractor(a_stack);

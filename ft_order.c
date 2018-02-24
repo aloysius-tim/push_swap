@@ -24,7 +24,10 @@ int     ft_order_three(t_list **a_stack, t_list **b_stack, int nb_elems)
     if (*((int *)stack->data) > *((int *)stack->next->data))
         (ft_op("sa", a_stack, b_stack, 1));
     if (ft_list_is_reverse_ordered_int(*a_stack))
-        return (ft_op("rra", a_stack, b_stack, nb_elems));
+    {
+        (ft_op("rra", a_stack, b_stack, nb_elems));
+        return (1);
+    }
     if (ft_list_is_ordered_int(*a_stack))
         return (1);
     (ft_op("rra", a_stack, b_stack, 1));

@@ -10,9 +10,7 @@
 # include <string.h>
 # include <stdio.h>
 
-//t_list  **ft_generate_stack(int argc, char *argv[]);
 int     ft_refractor(t_list *stack);
-void    print_stacks(t_list *stack_a, t_list *stack_b, char *status);
 int     ft_push_slides(t_list **a_stack, t_list **b_stack, int slide_size, int iteration, int stack_initial_size,
                        int top_slide, int bottom_slide);
 void     ft_order_stack(t_list  **a_stack, t_list **b_stack);
@@ -26,4 +24,5 @@ void     ft_push_all(t_list **from, t_list **to, int nb_elems);
 int     ft_order_three(t_list **a_stack, t_list **b_stack, int nb_elems);
 void    ft_insert_top(t_list  **a_stack, t_list **b_stack);
 void    ft_insert_bottom(t_list  **a_stack, t_list **b_stack);
+int    exit_error();
 #endif

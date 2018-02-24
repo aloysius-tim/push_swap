@@ -5,12 +5,12 @@ NAME         = $(NAME_CHECKER) $(NAME_PUSH)
 CHECKER     = ft_checker.c \
                 $(BOTH)
 PUSH_SWAP   = ft_push_swap.c \
-                ft_util.c \
                 ft_insert.c \
                 ft_order.c \
                 ft_slides.c \
                 $(BOTH)
 BOTH        = ft_op.c \
+                ft_util.c \
 
 FLAGS		=   -Wall -Werror -Wextra -fsanitize=undefined
 

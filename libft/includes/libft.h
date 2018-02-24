@@ -165,6 +165,8 @@ t_list				*ft_list_find_max(t_list *stack);
 int					ft_list_avg(t_list *stack);
 int					ft_list_get_nb_smaller(t_list *stack, t_list *elem);
 int					ft_list_is_reverse_ordered_int(t_list *begin_list);
+int					ft_list_has_duplicates_int(t_list *begin_list);
+int					ft_list_contain_duplicate_int(t_list *begin_list, int nb);
 
 double				ft_ceil(double x);
 double				ft_floor(double x);

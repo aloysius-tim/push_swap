@@ -1,44 +1,37 @@
 #include "includes/ft_checker.h"
 
-int ft_op(char *instruction, t_list **a_stack, t_list **b_stack, int nb_op)
+void ft_op(char *instruction, t_list **a_stack, t_list **b_stack, int nb_op)
 {
     int counter;
+    int tmp;
 
     counter = 0;
+    if (ft_strcmp(instruction, "sa") == 0)
+        (ft_swap(a_stack));
+    else if (ft_strcmp(instruction, "sb") == 0)
+        (ft_swap(b_stack));
+    else if (ft_strcmp(instruction, "ss") == 0)
+        tmp = (ft_swap(a_stack) + ft_swap(b_stack));
+    else if (ft_strcmp(instruction, "pa") == 0)
+        (ft_push(a_stack, b_stack));
+    else if (ft_strcmp(instruction, "pb") == 0)
+        (ft_push(b_stack, a_stack));
+    else if (ft_strcmp(instruction, "ra") == 0)
+        (ft_rotate(a_stack, nb_op));
+    else if (ft_strcmp(instruction, "rb") == 0)
+        (ft_rotate(b_stack, nb_op));
+    else if (ft_strcmp(instruction, "rr") == 0)
+        tmp = (ft_rotate(a_stack, nb_op) + ft_rotate(b_stack, nb_op));
+    else if (ft_strcmp(instruction, "rra") == 0)
+        (ft_reverse_rotate(a_stack, nb_op));
+    else if (ft_strcmp(instruction, "rrb") == 0)
+        (ft_reverse_rotate(b_stack, nb_op));
+    else if (ft_strcmp(instruction, "rrr") == 0)
+        tmp = (ft_reverse_rotate(a_stack, nb_op), ft_reverse_rotate(b_stack, nb_op));
+    else
+        exit_error();
     while (counter++ < nb_op)
         ft_printf("%s\n", instruction);
-    if (ft_strcmp(instruction, "sa") == 0)
-        return (ft_swap(a_stack));
-    else if (ft_strcmp(instruction, "sb") == 0)
-        return (ft_swap(b_stack));
-    else if (ft_strcmp(instruction, "ss") == 0)
-        return (ft_swap_both(a_stack, b_stack));
-    else if (ft_strcmp(instruction, "pa") == 0)
-        return (ft_push_a(a_stack, b_stack));
-    else if (ft_strcmp(instruction, "pb") == 0)
-        return (ft_push_b(a_stack, b_stack));
-    else if (ft_strcmp(instruction, "ra") == 0)
-        return (ft_rotate(a_stack, nb_op));
-    else if (ft_strcmp(instruction, "rb") == 0)
-        return (ft_rotate(b_stack, nb_op));
-    else if (ft_strcmp(instruction, "rr") == 0)
-        return (ft_rotate_both(a_stack, b_stack, nb_op));
-    else if (ft_strcmp(instruction, "rra") == 0)
-        return (ft_reverse_rotate(a_stack, nb_op));
-    else if (ft_strcmp(instruction, "rrb") == 0)
-        return (ft_reverse_rotate(b_stack, nb_op));
-    else if (ft_strcmp(instruction, "rrr") == 0)
-        return (ft_reverse_rotate_both(a_stack, b_stack, nb_op));
-    else if (ft_strcmp(instruction, "print") == 0)
-    {
-        printf("\n\nA stack\n");
-        ft_list_print_int(*a_stack);
-        printf("\n\nB stack\n");
-        ft_list_print_int(*b_stack);
-        return (1);
-    }
-    else
-        return (0);
 }
 
 int ft_swap(t_list** stack)
@@ -55,24 +48,12 @@ int ft_swap(t_list** stack)
     return (1);
 }
 
-int ft_swap_both(t_list** stack_a, t_list** stack_b)
+int ft_push(t_list** stack_a, t_list** stack_b)
 {
-    return (ft_swap(stack_a) + ft_swap(stack_b));
-}
-
-int ft_push_a(t_list** stack_a, t_list** stack_b)
-{
-    int size;
-
-    if ((size = ft_list_size(*stack_b)) == 0)
+    if ((ft_list_size(*stack_b)) == 0)
         return (1);
     ft_list_push_front(stack_a, ft_list_pop(stack_b));
     return (1);
-}
-
-int ft_push_b(t_list** stack_a, t_list** stack_b)
-{
-    return (ft_push_a(stack_b, stack_a));
 }
 
 int ft_rotate(t_list** stack, int nb)
@@ -91,11 +72,6 @@ int ft_rotate(t_list** stack, int nb)
     return (counter);
 }
 
-int ft_rotate_both(t_list** stack_a, t_list** stack_b, int nb)
-{
-    return (ft_rotate(stack_a, nb) + ft_rotate(stack_b, nb));
-}
-
 int ft_reverse_rotate(t_list** stack, int nb)
 {
     void *tmp;
@@ -110,9 +86,4 @@ int ft_reverse_rotate(t_list** stack, int nb)
         ft_list_push_front(stack, tmp);
     }
     return (counter);
-}
-
-int ft_reverse_rotate_both(t_list** stack_a, t_list** stack_b, int nb)
-{
-    return (ft_reverse_rotate(stack_a, nb), ft_reverse_rotate(stack_b, nb));
 }

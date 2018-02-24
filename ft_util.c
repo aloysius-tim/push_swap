@@ -64,3 +64,9 @@ int     ft_find_nearest_bottom_up(t_list *stack, int top, int bottom, int max_le
     }
     return (counter + 1);
 }
+
+int    exit_error()
+{
+    ft_printf("Error\n");
+    exit(-1);
+}
