@@ -1,61 +1,73 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_list_math.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkeynes <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/02/24 12:29:50 by tkeynes           #+#    #+#             */
+/*   Updated: 2018/02/24 12:30:32 by tkeynes          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/libft.h"
 
-t_list     *ft_list_find_min(t_list *stack)
+t_list		*ft_list_find_min(t_list *stack)
 {
-    t_list *min;
+	t_list *min;
 
-    min = stack;
-    stack = stack->next;
-    while (stack)
-    {
-        if (*((int *)min->data) > *((int *)stack->data))
-            min = stack;
-        stack = stack->next;
-    }
-    return (min);
+	min = stack;
+	stack = stack->next;
+	while (stack)
+	{
+		if (*((int *)min->data) > *((int *)stack->data))
+			min = stack;
+		stack = stack->next;
+	}
+	return (min);
 }
 
-t_list  *ft_list_find_max(t_list *stack)
+t_list		*ft_list_find_max(t_list *stack)
 {
-    t_list *max;
+	t_list *max;
 
-    max = stack;
-    stack = stack->next;
-    while (stack)
-    {
-        if (*((int *)max->data) < *((int *)stack->data))
-            max = stack;
-        stack = stack->next;
-    }
-    return (max);
+	max = stack;
+	stack = stack->next;
+	while (stack)
+	{
+		if (*((int *)max->data) < *((int *)stack->data))
+			max = stack;
+		stack = stack->next;
+	}
+	return (max);
 }
 
-int     ft_list_avg(t_list *stack)
+int			ft_list_avg(t_list *stack)
 {
-    int nb_elem;
-    int sum;
+	int nb_elem;
+	int sum;
 
-    sum = 0;
-    nb_elem = 0;
-    while (stack)
-    {
-        nb_elem++;
-        sum += *((int *)stack->data);
-        stack = stack->next;
-    }
-    return (sum / nb_elem);
+	sum = 0;
+	nb_elem = 0;
+	while (stack)
+	{
+		nb_elem++;
+		sum += *((int *)stack->data);
+		stack = stack->next;
+	}
+	return (sum / nb_elem);
 }
 
-int     ft_list_get_nb_smaller(t_list *stack, t_list *elem)
+int			ft_list_get_nb_smaller(t_list *stack, t_list *elem)
 {
-    int counter;
+	int counter;
 
-    counter = 0;
-    while (stack)
-    {
-        if (*((int *)stack->data) < *((int *)elem->data))
-            counter++;
-        stack = stack->next;
-    }
-    return (counter);
+	counter = 0;
+	while (stack)
+	{
+		if (*((int *)stack->data) < *((int *)elem->data))
+			counter++;
+		stack = stack->next;
+	}
+	return (counter);
 }

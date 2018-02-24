@@ -6,7 +6,7 @@
 /*   By: tkeynes <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 20:08:00 by tkeynes           #+#    #+#             */
-/*   Updated: 2018/02/07 14:54:22 by tkeynes          ###   ########.fr       */
+/*   Updated: 2018/02/24 12:33:30 by tkeynes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ typedef struct		s_file
 	int				is_first_elem;
 }					t_file;
 
-typedef struct	    s_fd
+typedef struct		s_fd
 {
-    char		    *data;
-    struct s_fd	    *next;
-    int			    fd_num;
-}				    t_fd;
+	char			*data;
+	struct s_fd		*next;
+	int				fd_num;
+}					t_fd;
 
-static t_list	    *g_fds;
-int				    get_next_line(int const fds, char **line);
-int				    read_buffer(int const fd, char **final);
-t_list			    *find_fd_list(int const fd);
-char			    *str_comb(char *str1, char *str2);
-int				    iterations(t_list *current_elem, char **line, int fd);
+static t_list		*g_fds;
+int					get_next_line(int const fds, char **line);
+int					read_buffer(int const fd, char **final);
+t_list				*find_fd_list(int const fd);
+char				*str_comb(char *str1, char *str2);
+int					iterations(t_list *current_elem, char **line, int fd);
 
 void				*ft_memset(void *s, int c, size_t n);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
@@ -157,13 +157,13 @@ void				ft_sorted_list_insert(t_list **begin_list, void *data
 , int (*cmp)());
 void				ft_sorted_list_merge(t_list **begin_list1
 , t_list *begin_list2, int (*cmp)());
-void	            *ft_list_pop(t_list **begin_list);
-void	            *ft_list_pop_last(t_list **begin_list);
-int		            ft_list_is_ordered_int(t_list *begin_list);
-t_list     			*ft_list_find_min(t_list *stack);
-t_list  			*ft_list_find_max(t_list *stack);
-int     			ft_list_avg(t_list *stack);
-int                 ft_list_get_nb_smaller(t_list *stack, t_list *elem);
+void				*ft_list_pop(t_list **begin_list);
+void				*ft_list_pop_last(t_list **begin_list);
+int					ft_list_is_ordered_int(t_list *begin_list);
+t_list				*ft_list_find_min(t_list *stack);
+t_list				*ft_list_find_max(t_list *stack);
+int					ft_list_avg(t_list *stack);
+int					ft_list_get_nb_smaller(t_list *stack, t_list *elem);
 int					ft_list_is_reverse_ordered_int(t_list *begin_list);
 
 double				ft_ceil(double x);
