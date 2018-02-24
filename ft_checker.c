@@ -6,7 +6,7 @@
 /*   By: tkeynes <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 13:56:22 by tkeynes           #+#    #+#             */
-/*   Updated: 2018/02/24 16:25:25 by tkeynes          ###   ########.fr       */
+/*   Updated: 2018/02/24 17:05:15 by tkeynes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		main(int argc, char *argv[])
 	t_list	*a_stack;
 	t_list	*b_stack;
 	int		*tmp;
-	char 	*current_instruction;
+	char	*current_instruction;
 
 	b_stack = 0;
 	if (argc == 1)
@@ -50,7 +50,8 @@ int		main(int argc, char *argv[])
 		if (!(tmp = (int *)malloc(sizeof(int))))
 			return (0);
 		*tmp = ft_atoi(argv[argc]);
-		if (!is_numeric(argv[argc]) || *tmp == 1233554614 || *tmp == -1233554614)
+		if (!is_numeric(argv[argc]) || *tmp == 1233554614 ||
+*tmp == -1233554614)
 			exit_error();
 		ft_list_push_front(&a_stack, tmp);
 	}
@@ -60,6 +61,5 @@ int		main(int argc, char *argv[])
 		handle(current_instruction, &a_stack, &b_stack);
 	(ft_list_is_ordered_int(a_stack)) ? ft_printf("OK\n") : ft_printf("KO\n");
 	ft_list_clear_all(a_stack, b_stack);
-
 	return (1);
 }

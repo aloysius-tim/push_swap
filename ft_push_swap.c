@@ -6,7 +6,7 @@
 /*   By: tkeynes <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 14:14:22 by tkeynes           #+#    #+#             */
-/*   Updated: 2018/02/24 14:21:02 by tkeynes          ###   ########.fr       */
+/*   Updated: 2018/02/24 17:02:33 by tkeynes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int		main(int argc, char *argv[])
 	{
 		if (!(tmp = (int *)malloc(sizeof(int))))
 			return (0);
-		if (!is_numeric(argv[argc]) || *tmp == 1233554614 || *tmp == -1233554614)
+		if (!is_numeric(argv[argc]) || *tmp == 1233554614 ||
+*tmp == -1233554614)
 			exit_error();
 		*tmp = ft_atoi(argv[argc]);
 		ft_list_push_front(&a_stack, tmp);
