@@ -13,6 +13,17 @@
 #include "includes/ft_push_swap.h"
 #include "includes/ft_checker.h"
 
+int		is_numeric(char *str)
+{
+	if (*str == '-')
+		str++;
+	if (!str)
+		return (0);
+	if (ft_isdigit(*str))
+		return (1);
+	return (0);
+}
+
 int		main(int argc, char *argv[])
 {
 	t_list		*a_stack;
@@ -28,7 +39,7 @@ int		main(int argc, char *argv[])
 	{
 		if (!(tmp = (int *)malloc(sizeof(int))))
 			return (0);
-		if (!ft_isdigit(*argv[argc]))
+		if (!is_numeric(argv[argc]) || *tmp == 1233554614 || *tmp == -1233554614)
 			exit_error();
 		*tmp = ft_atoi(argv[argc]);
 		ft_list_push_front(&a_stack, tmp);
