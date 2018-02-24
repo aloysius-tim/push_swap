@@ -56,3 +56,5 @@ checker
 Icon\r
 .idea
 *.idea*
+.push_swap
+.checker

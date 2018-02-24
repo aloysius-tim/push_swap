@@ -11,6 +11,7 @@ PUSH_SWAP   = ft_push_swap.c \
                 $(BOTH)
 BOTH        = ft_op.c \
                 ft_util.c \
+                ft_handle_op.c
 
 FLAGS		=   -Wall -Werror -Wextra -fsanitize=undefined
 
